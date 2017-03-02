@@ -5,14 +5,32 @@ import hashlib
 import web
 import receive
 import sys
+import os
 import linecache
 from handle_text import handle_text
 from handle_event import hello, bye
+from handle_voice import handle_voice
+
+
+g_KEY_REPLYS = {
+    "知友": [
+        '知友们，中秋快乐！',  # title
+        '给知友的祝福。',  # desc
+        'http://pic33.nipic.com/20130923/11927319_180343313383_2.jpg',  # picture
+        'http://viewer.maka.im/k/J64391B8',  # url
+    ],
+}
+
 
 class Handle(object):
     '''
     p
     '''
+
+    def __init__(self):
+        self.app_root = os.path.dirname(__file__)
+        self.templates_root = os.path.join(self.app_root, 'templates')
+        self.render = web.template.render(self.templates_root)
 
     def GET(self):
         try:
@@ -41,21 +59,35 @@ class Handle(object):
     def POST(self):
         try:
             web_data = web.data()
-            print "Handle Post webdata: ", web_data  # 后台打日志
 
             rec_msg = receive.parse_xml(web_data)
 
-            if isinstance(rec_msg, receive.Msg)\
-                    and rec_msg.MsgType == 'text':
-                return handle_text(rec_msg).send()
+            if not isinstance(rec_msg, receive.Msg):
+                return "success"
 
-            elif isinstance(rec_msg, receive.Msg)\
-                    and rec_msg.MsgType == 'event':
+            if rec_msg.MsgType == 'text':
+                global g_KEY_REPLYS
 
+                if rec_msg.Content in g_KEY_REPLYS.keys():
+                    pic_info = g_KEY_REPLYS[rec_msg.Content]
+                    to_user = rec_msg.FromUserName
+                    from_user = rec_msg.ToUserName
+                    # pic_info 必须是二维数组
+                    pic_info = [pic_info]
+                    reply = self.render.reply_morepic(
+                        to_user, from_user, pic_info, 1)
+                    return reply
+                else:
+                    return handle_text(self.render, rec_msg)
+
+            elif rec_msg.MsgType == 'event':
                 if rec_msg.Event == "subscribe":
                     return hello(rec_msg).send()
                 elif rec_msg.Event == "unsubscribe":
                     return bye(rec_msg).send()
+
+            elif rec_msg.MsgType == 'voice':
+                return handle_voice(rec_msg).send()
 
             else:
                 print "暂且不处理"
@@ -63,6 +95,7 @@ class Handle(object):
         except Exception, argment:
             PrintException()
             return argment
+
 
 def PrintException():
     exc_type, exc_obj, tb = sys.exc_info()
