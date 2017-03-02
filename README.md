@@ -4,7 +4,7 @@
 
 ## 将内网映射到外网，可以使用
 ### 使用方法
-1. 注册用户，登陆 ![natapp](https://natapp.cn)， 下载对应版本的 natapp 执行文件
+1. 注册用户，登陆 [natapp](https://natapp.cn)， 下载对应版本的 natapp 执行文件
 
 2. 记录 authtoken
 
