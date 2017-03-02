@@ -6,8 +6,9 @@ import web
 import receive
 import sys
 import os
+import time
 import linecache
-from handle_text import handle_text
+from handle_text import auto_reply
 from handle_event import hello, bye
 from handle_voice import handle_voice
 
@@ -78,7 +79,16 @@ class Handle(object):
                         to_user, from_user, pic_info, 1)
                     return reply
                 else:
-                    return handle_text(self.render, rec_msg)
+
+                    reply_content = auto_reply(rec_msg.Content)
+                    to_user = rec_msg.FromUserName
+                    from_user = rec_msg.ToUserName
+
+                    reply_msg = self.render.reply_text(to_user, from_user,
+                                                       int(time.time()),
+                                                       reply_content)
+
+                    return reply_msg
 
             elif rec_msg.MsgType == 'event':
                 if rec_msg.Event == "subscribe":
@@ -93,15 +103,19 @@ class Handle(object):
                 print "暂且不处理"
                 return "success"
         except Exception, argment:
-            PrintException()
+            print_exception()
             return argment
 
 
-def PrintException():
-    exc_type, exc_obj, tb = sys.exc_info()
+def print_exception():
+    '''
+    Print exception.
+    '''
+    _, exc_obj, tb = sys.exc_info()
     f = tb.tb_frame
     lineno = tb.tb_lineno
     filename = f.f_code.co_filename
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
-    print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj)
+    print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno,
+                                                       line.strip(), exc_obj)

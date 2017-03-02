@@ -9,26 +9,20 @@ import reply
 import time
 
 
-def handle_text(render, rec_msg):
+def auto_reply(Content):
     '''
     Handle the request with text
     '''
-    content = rec_msg.Content  # 获得用户所输入的内容
+    content = Content  # 获得用户所输入的内容
+
     key = "e311457a3602414ba100184367aa767c"  # 图灵机器人的key
     url = 'http://www.tuling123.com/openapi/api?key=' + key + '&info='\
-          + content.encode('UTF-8')
-
+          + content
     page = urllib.urlopen(url)
     html = page.read()
     dic_json = json.loads(html)
     reply_content = dic_json['text']
-    print 'reply:', reply_content
-    to_user = rec_msg.FromUserName
-    from_user = rec_msg.ToUserName
-
-    reply_msg = render.reply_text(to_user, from_user, int(time.time()), reply_content)
-    print("handle_text:",reply_msg)
-    return reply_msg
+    return reply_content
 
 
 if __name__ == '__main__':
