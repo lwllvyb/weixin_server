@@ -17,7 +17,11 @@
 
 5. http://*****.natappfree.cc -> 127.0.0.1:5000 即为外网网址，可以用于搭建微信公众号服务器
 
+# UPDATE
+2017.3.13
+add common.py file. In common.py, can use get_logger() function to use logging.
+Debuging will be easy!
 
 # TODO
--[ ]  add logging ,make it easy to debug.
+1.  add logging ,make it easy to debug.
 2.
