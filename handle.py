@@ -8,24 +8,22 @@ import sys
 import os
 import time
 import linecache
-from handle_text import auto_reply
+from handle_text import auto_reply, handle_get_zhiyou, handle_get_cpu, handle_get_gpu
 from handle_event import hello, bye
 from handle_voice import handle_voice
+from common import get_logger
+logger = get_logger()
 
-
-g_KEY_REPLYS = {
-    "知友": [
-        '知友们，中秋快乐！',  # title
-        '给知友的祝福。',  # desc
-        'http://pic33.nipic.com/20130923/11927319_180343313383_2.jpg',  # picture
-        'http://viewer.maka.im/k/J64391B8',  # url
-    ],
+TEXT_HANDLES = {
+    "CPU": handle_get_cpu,
+    "GPU": handle_get_gpu,
+    "知友": handle_get_zhiyou,
 }
 
 
 class Handle(object):
     '''
-    p
+    Handle all the request with get/post.
     '''
 
     def __init__(self):
@@ -49,37 +47,30 @@ class Handle(object):
             sha1 = hashlib.sha1()
             map(sha1.update, import_info)
             hashcode = sha1.hexdigest()
-            print "handle/GET func: hashcode, signature: ", hashcode, signature
             if hashcode == signature:
                 return echostr
             else:
+                logger.info(
+                    "handle/GET hashcode [%s] signature [%s] " % (hashcode, signature))
                 return ""
         except Exception, argument:
+            logger.error("exception [%s]" % (argument))
             return argument
 
     def POST(self):
         try:
             web_data = web.data()
-
             rec_msg = receive.parse_xml(web_data)
 
             if not isinstance(rec_msg, receive.Msg):
                 return "success"
 
             if rec_msg.MsgType == 'text':
-                global g_KEY_REPLYS
-
-                if rec_msg.Content in g_KEY_REPLYS.keys():
-                    pic_info = g_KEY_REPLYS[rec_msg.Content]
-                    to_user = rec_msg.FromUserName
-                    from_user = rec_msg.ToUserName
-                    # pic_info 必须是二维数组
-                    pic_info = [pic_info]
-                    reply = self.render.reply_morepic(
-                        to_user, from_user, pic_info, 1)
-                    return reply
+                if rec_msg.Content in TEXT_HANDLES.keys():
+                    handle_func = TEXT_HANDLES[rec_msg.Content]
+                    reply_msg = handle_func(rec_msg, self.render)
+                    return reply_msg
                 else:
-
                     reply_content = auto_reply(rec_msg.Content)
                     to_user = rec_msg.FromUserName
                     from_user = rec_msg.ToUserName
@@ -87,7 +78,6 @@ class Handle(object):
                     reply_msg = self.render.reply_text(to_user, from_user,
                                                        int(time.time()),
                                                        reply_content)
-
                     return reply_msg
 
             elif rec_msg.MsgType == 'event':
@@ -100,14 +90,14 @@ class Handle(object):
                 return handle_voice(rec_msg).send()
 
             else:
-                print "暂且不处理"
+                logger.error("msgtype [%s]" % (rec_msg.MsgType))
                 return "success"
         except Exception, argment:
-            print_exception()
+            print_exception(logger)
             return argment
 
 
-def print_exception():
+def print_exception(logger):
     '''
     Print exception.
     '''
@@ -117,5 +107,5 @@ def print_exception():
     filename = f.f_code.co_filename
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
-    print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno,
-                                                       line.strip(), exc_obj)
+    logger.error('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno,
+                                                              line.strip(), exc_obj))

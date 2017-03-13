@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
 '''
-Handle request with event.
+Handle request with voice.
 '''
 
 import reply
+from common import get_logger
+logger = get_logger()
 
 def handle_voice(rec_msg):
     to_user = rec_msg.FromUserName

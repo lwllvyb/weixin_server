@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 # filename: receive.py
 import xml.etree.ElementTree as ET
+from common import get_logger
+logger = get_logger()
 
 def parse_xml(web_data):
     if len(web_data) == 0:
         return None
     xmlData = ET.fromstring(web_data)
     msg_type = xmlData.find('MsgType').text
+    logger.info("msg_type [%s]" % msg_type)
     if msg_type == 'text':
         return TextMsg(xmlData)
     elif msg_type == 'image':

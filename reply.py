@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # filename: reply.py
 import time
-
+from common import get_logger
+logger = get_logger()
 
 class Msg(object):
     def __init__(self):
