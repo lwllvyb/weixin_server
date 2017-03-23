@@ -8,7 +8,7 @@ import sys
 import os
 import time
 import linecache
-from handle_text import auto_reply, handle_get_zhiyou, handle_get_cpu, handle_get_gpu
+from handle_text import auto_reply, handle_get_zhiyou, handle_get_cpu, handle_get_gpu, handle_get_home_temp, handle_get_home_humidity
 from handle_event import hello, bye
 from handle_voice import handle_voice
 from common import get_logger
@@ -17,6 +17,8 @@ logger = get_logger()
 TEXT_HANDLES = {
     "CPU": handle_get_cpu,
     "GPU": handle_get_gpu,
+    "室内温度": handle_get_home_temp,
+    "室内湿度": handle_get_home_humidity,
     "知友": handle_get_zhiyou,
 }
 

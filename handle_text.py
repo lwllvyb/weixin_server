@@ -59,6 +59,32 @@ def handle_get_gpu(rec_msg, render):
                                   "时间: %s GPU温度: %s" % (date, value))
     return reply_msg
 
+def handle_get_home_temp(rec_msg, render):
+    to_user = rec_msg.FromUserName
+    from_user = rec_msg.ToUserName
+
+    r = redis.Redis(host="localhost", port="6379", db=0)
+    set_name = "HOME_TEMP"
+    value = r.hget(set_name, "value")
+    date = r.hget(set_name, "date")
+    reply_msg = render.reply_text(to_user, from_user,
+                                  int(time.time()),
+                                  "时间: %s 室内温度: %s" % (date, value))
+    return reply_msg
+
+def handle_get_home_humidity(rec_msg, render):
+    to_user = rec_msg.FromUserName
+    from_user = rec_msg.ToUserName
+
+    r = redis.Redis(host="localhost", port="6379", db=0)
+    set_name = "HOME_HUM"
+    value = r.hget(set_name, "value")
+    date = r.hget(set_name, "date")
+    reply_msg = render.reply_text(to_user, from_user,
+                                  int(time.time()),
+                                  "时间: %s 室内湿度: %s" % (date, value))
+    return reply_msg
+
 def auto_reply(Content):
     '''
     Handle the request with text

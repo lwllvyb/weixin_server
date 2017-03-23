@@ -1,0 +1,35 @@
+2017-03-14 15:01:43,204 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:38944 - - [14/Mar/2017 15:01:43] "HTTP/1.1 POST /weixin" - 200 OK
+127.0.0.1:38950 - - [14/Mar/2017 15:01:53] "HTTP/1.1 GET /weixin" - 200 OK
+2017-03-14 15:44:29,775 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:39480 - - [14/Mar/2017 15:44:30] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-15 11:07:41,007 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:39734 - - [15/Mar/2017 11:07:41] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-15 11:07:44,034 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:39740 - - [15/Mar/2017 11:07:44] "HTTP/1.1 POST /weixin" - 200 OK
+127.0.0.1:39746 - - [15/Mar/2017 11:07:57] "HTTP/1.1 GET /weixin" - 200 OK
+2017-03-15 15:54:56,004 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:44588 - - [15/Mar/2017 15:54:56] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-15 15:55:00,894 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:44630 - - [15/Mar/2017 15:55:01] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-15 15:55:04,328 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:44644 - - [15/Mar/2017 15:55:04] "HTTP/1.1 POST /weixin" - 200 OK
+127.0.0.1:45590 - - [17/Mar/2017 08:11:05] "HTTP/1.1 GET /" - 200 OK
+2017-03-23 14:48:30,993 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58438 - - [23/Mar/2017 14:48:31] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:48:33,889 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58444 - - [23/Mar/2017 14:48:35] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:48:35,997 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58450 - - [23/Mar/2017 14:48:36] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:48:39,135 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58456 - - [23/Mar/2017 14:48:39] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:48:52,428 [parse_xml: receive.py,12] msg_type [text]
+2017-03-23 14:48:52,752 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58470 - - [23/Mar/2017 14:48:52] "HTTP/1.1 POST /weixin" - 200 OK
+127.0.0.1:58474 - - [23/Mar/2017 14:48:53] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:48:55,217 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58486 - - [23/Mar/2017 14:48:55] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:54:20,532 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58642 - - [23/Mar/2017 14:54:20] "HTTP/1.1 POST /weixin" - 200 OK
+2017-03-23 14:54:23,578 [parse_xml: receive.py,12] msg_type [text]
+127.0.0.1:58650 - - [23/Mar/2017 14:54:23] "HTTP/1.1 POST /weixin" - 200 OK
